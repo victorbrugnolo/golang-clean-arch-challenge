@@ -20,6 +20,8 @@ The api rest run on port :8000
 - Open [api/create_order](api/create_order.http)
 - Send request
 - Open [api/list_orders](api/list_orders.http)
+- Send request
+
 
 ### GRPC
 The grpc server run on port :50051
