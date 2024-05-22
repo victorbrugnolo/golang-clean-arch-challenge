@@ -8,13 +8,13 @@ package main
 
 import (
 	"database/sql"
+	"github.com/google/wire"
 	"github.com/victorbrugnolo/golang-clean-arch-challenge/internal/entity"
 	"github.com/victorbrugnolo/golang-clean-arch-challenge/internal/event"
 	"github.com/victorbrugnolo/golang-clean-arch-challenge/internal/infra/database"
 	"github.com/victorbrugnolo/golang-clean-arch-challenge/internal/infra/web"
 	"github.com/victorbrugnolo/golang-clean-arch-challenge/internal/usecase"
 	"github.com/victorbrugnolo/golang-clean-arch-challenge/pkg/events"
-	"github.com/google/wire"
 )
 
 import (
@@ -35,6 +35,12 @@ func NewWebOrderHandler(db *sql.DB, eventDispatcher events.EventDispatcherInterf
 	orderCreated := event.NewOrderCreated()
 	webOrderHandler := web.NewWebOrderHandler(eventDispatcher, orderRepository, orderCreated)
 	return webOrderHandler
+}
+
+func NewListOrdersUseCase(db *sql.DB) *usecase.ListOrdersUseCase {
+	orderRepository := database.NewOrderRepository(db)
+	listOrdersUseCase := usecase.NewListOrdersUseCase(orderRepository)
+	return listOrdersUseCase
 }
 
 // wire.go:
